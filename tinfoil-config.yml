@@ -6,7 +6,7 @@ memory: 16384
 
 containers:
   - name: "gated-inference"
-    image: "ghcr.io/glozow/gated-inference:v0.0.1@sha256:b4738d3662476e103cce81e76409552a073da8bdb14fe73e499fa21177751305"
+    image: "ghcr.io/glozow/gated-inference:v0.0.2@sha256:57aea7a36b5ce9ffba30caf665469f8e4354af30dade06db9b77be7abf999685"
     env:
       - GUARD_ENCLAVE: "guard-2-llamaguard31bq4.girizen.containers.tinfoil.dev"
       - GUARD_REPO: "glozow/tinfoil-container-config"
