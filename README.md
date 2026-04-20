@@ -1,35 +1,25 @@
-# Tinfoil Containers Template
+# Tinfoil Containers
 
-This is a GitHub template repository for deploying [Tinfoil Containers](https://docs.tinfoil.sh/containers/overview) — Docker containers that run in secure enclaves.
+Deployment repository for [Tinfoil Containers](https://docs.tinfoil.sh/containers/overview) — Docker containers that run in secure enclaves.
 
-## Getting Started
+Rather than create separate deployment repos, this repo holds the `tinfoil-config.yml` for **every** Tinfoil service.
 
-1. Click **[Use this template](https://github.com/tinfoilsh/tinfoil-containers-template/generate)** → **Create a new repository**
-2. Edit `tinfoil-config.yml` in your new repo — set your container image, ports, and paths
-3. Commit and push a Git tag:
-   ```bash
-   git add tinfoil-config.yml
-   git commit -m "chore: configure deployment"
-   git tag v0.0.1
-   git push origin main --tags
-   ```
-4. Go to the [Tinfoil Dashboard](https://dash.tinfoil.sh), navigate to **Containers** → **Deploy**, select your repo and tag, and click **Deploy**
+## Layout
 
-Your container will be live at `https://<container-name>.<org>.containers.tinfoil.dev` once the deployment completes.
+- **`main`** — base template. Holds changes that apply to every
+  service: `cvm-version` bumps, CI workflow updates, shim-template
+  changes, repo-wide policy. **Nothing service-specific lands here.**
+- **`guard`**, **`gated-inference`**, ... — one branch per service.
+  Branch from main when creating a new service.
+  Each branch holds the `tinfoil-config.yml`for that service.
+  Tags for that service are cut from this
+  branch and nowhere else.
 
-For a fully working example, see [tinfoil-containers-hello-world](https://github.com/tinfoilsh/tinfoil-containers-hello-world).
+## Tag convention
 
-## Updating
+`<service>-vX.Y.Z` — e.g. `guard-v0.0.1`, `gated-inference-v0.1.2`.
 
-Edit `tinfoil-config.yml`, commit, push a new tag, then click **Update** in the dashboard. Each tag creates an auditable record in the Sigstore transparency log.
+- The `<service>-` prefix matches the branch name.
+- `vX.Y.Z` is a standard semver for that service's image pin.
+- **Only ever tag from the service branch**, never from `main`.
 
-## Documentation
-
-For the full configuration reference, secrets management, debug mode, and more:
-
-**[docs.tinfoil.sh/containers](https://docs.tinfoil.sh/containers/overview)**
-
-## Support
-
-- [Documentation](https://docs.tinfoil.sh)
-- [Email Support](mailto:contact@tinfoil.sh)
