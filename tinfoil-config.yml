@@ -1,31 +1,19 @@
-# Tinfoil Container Configuration
-# This file will be auto-populated when you deploy via the Tinfoil dashboard.
-# You can also edit it manually - see docs at https://docs.tinfoil.sh/containers/config
-#
-# After creating this repo from the template:
-# 1. Go to https://dash.tinfoil.sh and create a new container
-# 2. Provide this repository URL and your container details
-# 3. This file will be automatically updated with your deployment settings
-#
-# For updates: edit this file, commit, and push a new tag (e.g., v2)
+# Gated-inference shape on the `gated-inference` branch.
 
 cvm-version: 0.7.3
-cpus: 2
-memory: 8192
+cpus: 4
+memory: 16384
 
-# Container configuration
-# Note: image must include SHA256 hash (e.g., image:tag@sha256:abc123...)
 containers:
-  - name: "app"
-    image: "your-image:tag@sha256:..."
+  - name: "gated-inference"
+    image: "ghcr.io/glozow/gated-inference:v0.0.1@sha256:b4738d3662476e103cce81e76409552a073da8bdb14fe73e499fa21177751305"
     env:
-      - LOG_LEVEL: "info"
-    secrets:
-      - API_KEY
-    command: ["--port", "8000"]
+      - GUARD_ENCLAVE: "guard-2-llamaguard31bq4.girizen.containers.tinfoil.dev"
+      - GUARD_REPO: "glozow/tinfoil-container-config"
 
-# Shim configuration (adjust upstream-port and paths to match your container)
 shim:
-  upstream-port: 8000
+  upstream-port: 8080
   paths:
+    - /generate
+    - /pubkey
     - /health
