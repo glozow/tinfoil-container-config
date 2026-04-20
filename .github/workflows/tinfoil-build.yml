@@ -3,7 +3,7 @@ name: Build and Attest
 on:
   push:
     tags:
-      - 'v*'
+      - '*v*'
 
 jobs:
   release:
