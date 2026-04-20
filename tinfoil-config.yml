@@ -1,31 +1,18 @@
-# Tinfoil Container Configuration
-# This file will be auto-populated when you deploy via the Tinfoil dashboard.
-# You can also edit it manually - see docs at https://docs.tinfoil.sh/containers/config
-#
-# After creating this repo from the template:
-# 1. Go to https://dash.tinfoil.sh and create a new container
-# 2. Provide this repository URL and your container details
-# 3. This file will be automatically updated with your deployment settings
-#
-# For updates: edit this file, commit, and push a new tag (e.g., v2)
+# Guard-shaped deploy config.
+# Deployed from tag `guard-v0.0.1`. Overwritten on `inference-*` tags
+# with the inference-shaped config in the same file.
 
 cvm-version: 0.7.3
 cpus: 2
 memory: 8192
 
-# Container configuration
-# Note: image must include SHA256 hash (e.g., image:tag@sha256:abc123...)
 containers:
-  - name: "app"
-    image: "your-image:tag@sha256:..."
-    env:
-      - LOG_LEVEL: "info"
-    secrets:
-      - API_KEY
-    command: ["--port", "8000"]
+  - name: "guard"
+    image: "ghcr.io/glozow/guard:v0.0.1@sha256:40942f51782ecec45440bbf6a94fdb2b09b01b1cba0a1a09601c771de40381cc"
 
-# Shim configuration (adjust upstream-port and paths to match your container)
 shim:
-  upstream-port: 8000
+  upstream-port: 8080
   paths:
+    - /classify
+    - /pubkey
     - /health
